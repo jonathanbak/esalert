@@ -1,0 +1,84 @@
+{
+    "took" : 5,
+    "timed_out" : false,
+    "_shards" : {
+      "total" : 4,
+      "successful" : 4,
+      "skipped" : 0,
+      "failed" : 0
+    },
+    "hits" : {
+      "total" : {
+        "value" : 1,
+        "relation" : "eq"
+      },
+      "max_score" : 1.0,
+      "hits" : [
+        {
+          "_index" : "metricbeat-7.9.3-2021.05.10-000005",
+          "_type" : "_doc",
+          "_id" : "zGgvX3kBmQgHzSX8ZW19",
+          "_score" : 1.0,
+          "_source" : {
+            "system" : {
+              "filesystem" : {
+                "device_name" : "/dev/nvme0n1p1",
+                "mount_point" : "/",
+                "available" : 1096966144,
+                "used" : {
+                  "pct" : 0.8721
+                }
+              }
+            },
+            "host" : {
+              "name" : "wb-web2"
+            }
+          },
+          "fields" : {
+            "pct" : [
+              "87.2%"
+            ],
+            "available" : [
+              "1.02GB"
+            ],
+            "timestamp" : [
+              "2021-05-12 15:06:51"
+            ]
+          }
+        },
+        {
+          "_index" : "metricbeat-7.9.3-2021.05.10-000005",
+          "_type" : "_doc",
+          "_id" : "zGgvX3kBmQgHzSX8ZW19",
+          "_score" : 1.0,
+          "_source" : {
+            "system" : {
+              "filesystem" : {
+                "device_name" : "/dev/nvme0n1p1",
+                "mount_point" : "/",
+                "available" : 1096966144,
+                "used" : {
+                  "pct" : 0.8821
+                }
+              }
+            },
+            "host" : {
+              "name" : "wb-web2"
+            }
+          },
+          "fields" : {
+            "pct" : [
+              "85.2%"
+            ],
+            "available" : [
+              "1.02GB"
+            ],
+            "timestamp" : [
+              "2021-05-12 15:06:51"
+            ]
+          }
+        }
+      ]
+    }
+  }
+  

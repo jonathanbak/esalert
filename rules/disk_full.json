@@ -1,0 +1,52 @@
+{
+  "query":{
+      "bool": {
+        "filter": [
+          {
+            "match": {
+              "metricset.name":"filesystem"
+            }
+          },
+          {
+            "range": {
+              "@timestamp": {
+                "gt": "now-1m"
+              }
+            }
+          }
+        ], 
+        "must": [
+          {
+            "range": {
+              "system.filesystem.used.pct":{
+                "gte" : 0.15
+              }
+            }
+          }
+        ]
+      }
+    },
+    "script_fields":{  
+     "timestamp":{  
+          "script":{
+            "lang": "painless",
+            "source":"String datetime = params._source['@timestamp'];ZonedDateTime zdt = ZonedDateTime.parse(datetime);DateTimeFormatter dtf = DateTimeFormatter.ofPattern(\"yyyy-MM-dd HH:mm:ss\");String updatedZdt = zdt.plusHours(9).format(dtf);updatedZdt"
+          }
+       },
+       "available":{  
+          "script":{
+            "lang": "painless",
+            "source":"float aa = (float)Math.round((float)params._source.system.filesystem.available / 1024 / 1024 / 1024 * 100) / 100; aa + 'GB'"
+          }
+       },
+       "pct":{  
+          "script":{
+            "lang": "painless",
+            "source":"float aa = (float)Math.round((float)params._source.system.filesystem.used.pct * 1000) / 10; aa + '%'"
+          }
+       }
+     },
+    "_source":[ 
+      "host.name","system.filesystem.used.pct","system.filesystem.available","system.filesystem.mount_point","system.filesystem.device_name"
+    ]
+}
