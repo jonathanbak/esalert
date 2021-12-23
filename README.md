@@ -4,6 +4,15 @@ Elasticsearch 쿼리 알림 설정
 ## 소개
 엘라스틱서치에서 원하는 쿼리 결과를 슬랙 등으로 알림을 하기 위한 라이브러리
 
+### <a name="디렉토리-구성"></a>디렉토리 구성
+    .
+    ├── conf   # 기본 설정 파일 폴더
+    │   ├── config.ini    # elastic,slack url 설정
+    │   └── rules.ini     # ./rules/*.json 폴더 파일들과 연결 설정
+    ├── libs  # 소스 파일
+    ├── rules  # 검색 쿼리 룰 파일
+    └── tests  # unit tests
+
 ### <a name="기본 설정"></a>기본 설정
 - conf/config.ini
 ```ini
