@@ -48,7 +48,7 @@ $ python3 -m unittest tests/libs/elastic.py
 $ python3 -m unittest tests/libs/elastic.py
 ```
 
-### <a name="사용법"></a>사용법
+### <a name="사용법"></a>사용법 1
 룰 설정후 실행
 ```bash
 $ python3 main.py
