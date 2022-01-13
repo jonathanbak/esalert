@@ -57,9 +57,8 @@ def main():
 
             if s.isVaildData() and s.isSentMsg() == False:
                 s.saveSendMsg()
-                SlackInstance = SlackMessage(
-                    url=c.get("slack.url"), title=alertTitle, msg=echoStr)
-            SlackInstance.send()
+                SlackInstance = SlackMessage(url=c.get("slack.url"), title=alertTitle, msg=echoStr)
+                SlackInstance.send()
 
 
 if __name__ == "__main__":
