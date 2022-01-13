@@ -16,7 +16,7 @@ class RuleConfig:
 
     def __init__(self) :
         self.config = configparser.ConfigParser()
-        self.config.read(self.CONFIG_FILE)
+        self.config.read(self.CONFIG_FILE, 'utf-8')
 
     def get(self, key:str) :
         res = self.config

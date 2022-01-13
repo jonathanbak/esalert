@@ -43,9 +43,9 @@ notify_title = Disk Full Alert
 -- elastic 접속 및 query 테스트
 $ python3 -m unittest tests/libs/elastic.py
 -- rules 설정 테스트
-$ python3 -m unittest tests/libs/elastic.py
+$ python3 -m unittest tests/libs/rules.py
 -- slack 알림 테스트
-$ python3 -m unittest tests/libs/elastic.py
+$ python3 -m unittest tests/libs/slack.py
 ```
 
 ### <a name="사용법"></a>사용법

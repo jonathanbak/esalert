@@ -3,3 +3,8 @@
 __pycache__
 .DS_Store
 setup.py
+.vscode/
+conf/config.ini
+conf/rules.ini
+rules/*.json
+lastest_alarm.json
