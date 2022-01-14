@@ -34,7 +34,7 @@ def main():
         snoozeMinute = r.config().get(rule_name + ".snooze_minute")
 
         # 찾을 es쿼리 로드
-        searchData = r.load(rule_name+'.json')
+        searchData = r.load(rule_name + '.json')
         # ES서버 es쿼리 전송
         es.search(searchPath, searchData)
         responseJson = es.getResponse()
@@ -46,6 +46,11 @@ def main():
         newResParams = r.findValues(findKeys)
         logger.info(newResParams)
         notify = AlertMessage(resFormat)
+        
+        if len(newResParams) < 1:
+            # print('최근 알림 데이터 삭제', rule_name)
+            s.removeLatestSendMsg(rule_name)
+        
         for o in range(len(newResParams)):
             echoStr = notify.getMessage(*newResParams[o])
 

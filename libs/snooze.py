@@ -155,3 +155,19 @@ class Snooze:
             isSave = True
 
         return isSave
+    
+    # 최근 알림 파일에서 삭제
+    def removeLatestSendMsg(self, section):
+        alarms = []
+        if os.path.isfile(self.LATEST_SEND_FILE) == True:
+            with open(self.LATEST_SEND_FILE, encoding="utf-8") as json_file:
+                json_data = json.load(json_file)
+                for jsonData in json_data:
+                    if jsonData['section'] != section:
+                        alarms.append(jsonData)
+        alarms.append(self.alarmData)
+        save_file = open(self.LATEST_SEND_FILE, "w", encoding="utf-8")
+        json.dump(alarms, save_file, ensure_ascii=False, indent=4)
+        save_file.close()
+         
+         

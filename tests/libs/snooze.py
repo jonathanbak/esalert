@@ -18,7 +18,7 @@ class SnoozeTest(unittest.TestCase):
 
             }
         }
-
+    """
     def testInit(self):
         s = Snooze(alarmData=self.ALARM_DATA, snoozeMinute=30)
         self.assertTrue(True)
@@ -47,7 +47,12 @@ class SnoozeTest(unittest.TestCase):
         s = Snooze(alarmData=self.ALARM_DATA, snoozeMinute=0)
         isSent = s.isSentMsg()
         self.assertTrue(True)
-
+   
+    def testRemoveLatestSendMsg(self):
+        s = Snooze(alarmData=self.ALARM_DATA, snoozeMinute=0)
+        s.removeLatestSendMsg('changed_security_rule')
+        self.assertTrue(True)
+    """    
 
 if __name__ == '__main__':
     unittest.main()
