@@ -165,7 +165,6 @@ class Snooze:
                 for jsonData in json_data:
                     if jsonData['section'] != section:
                         alarms.append(jsonData)
-        alarms.append(self.alarmData)
         save_file = open(self.LATEST_SEND_FILE, "w", encoding="utf-8")
         json.dump(alarms, save_file, ensure_ascii=False, indent=4)
         save_file.close()
