@@ -14,7 +14,7 @@ from libs.rules import RuleLoader
 from libs.alert import AlertMessage
 from libs.snooze import Snooze
 import config
-
+import sys
 logger.info('start app')
 
 """
@@ -32,6 +32,9 @@ def main():
         searchPath = r.config().get(rule_name + ".search_path")
         alertTitle = r.config().get(rule_name + ".notify_title")
         snoozeMinute = r.config().get(rule_name + ".snooze_minute")
+        slackUrl = r.config().get(rule_name + ".slack_url")
+        if slackUrl is None :
+            slackUrl = c.get("slack.url")
 
         # 찾을 es쿼리 로드
         searchData = r.load(rule_name + '.json')
@@ -62,7 +65,7 @@ def main():
 
             if s.isVaildData() and s.isSentMsg() == False:
                 s.saveSendMsg()
-                SlackInstance = SlackMessage(url=c.get("slack.url"), title=alertTitle, msg=echoStr)
+                SlackInstance = SlackMessage(url=slackUrl, title=alertTitle, msg=echoStr)
                 SlackInstance.send()
 
 
