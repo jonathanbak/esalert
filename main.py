@@ -31,7 +31,7 @@ def main():
     
     is_send_alarm_time = False # 알림 발송 시간 (09 ~ 18)
     current_hour = int(moment.now().add(hour=0).format("HH"))
-    if current_hour > 9 and current_hour < 18:
+    if current_hour >= 7 and current_hour <= 23:
         is_send_alarm_time = True
 
     for rule_name in r.config().all():
