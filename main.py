@@ -13,8 +13,10 @@ from libs.elastic import ElasticSearch
 from libs.rules import RuleLoader
 from libs.alert import AlertMessage
 from libs.snooze import Snooze
+from libs.queue import Queue
 import config
 import sys
+import moment
 logger.info('start app')
 
 """
@@ -25,6 +27,12 @@ def main():
     r = RuleLoader()
     es = ElasticSearch(url=c.get("elastic.url"), headers={"Authorization": "ApiKey "+c.get("elastic.ApiKey")})
     s = Snooze()
+    q = Queue()
+    
+    is_send_alarm_time = False # 알림 발송 시간 (09 ~ 18)
+    current_hour = int(moment.now().add(hour=0).format("HH"))
+    if current_hour > 9 and current_hour < 18:
+        is_send_alarm_time = True
 
     for rule_name in r.config().all():
         findKeys = r.config().get(rule_name + ".notify_key").split(',')
@@ -64,9 +72,29 @@ def main():
                 s.setSnoozeMinute(snoozeMinute)
 
             if s.isVaildData() and s.isSentMsg() == False:
-                s.saveSendMsg()
-                SlackInstance = SlackMessage(url=slackUrl, title=alertTitle, msg=echoStr)
+                
+                # 알림발송 시간일때 발송, 아닐경우 큐에 저장
+                if is_send_alarm_time:
+                    s.saveSendMsg()
+                    SlackInstance = SlackMessage(url=slackUrl, title=alertTitle, msg=echoStr)
+                    SlackInstance.send()
+                else:
+                    if rule_name != 'disk_full':
+                        q.add_queue({
+                            "title": alertTitle,
+                            "msg": echoStr
+                        })
+    
+    # 큐에 저장된 알림 발송
+    if is_send_alarm_time:
+        queue_list = q.get_queue_list()
+        if len(queue_list) > 0:
+            for i in queue_list:
+                SlackInstance = SlackMessage(url=slackUrl, title=i['title'], msg=i['msg'])
                 SlackInstance.send()
+            q.reset_queue()
+        
+                            
 
 
 if __name__ == "__main__":
