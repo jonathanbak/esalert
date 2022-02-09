@@ -74,13 +74,15 @@ def main():
             if s.isVaildData() and s.isSentMsg() == False:
                 
                 # 알림발송 시간일때 발송, 아닐경우 큐에 저장
+                s.saveSendMsg()
+                
                 if is_send_alarm_time:
-                    s.saveSendMsg()
                     SlackInstance = SlackMessage(url=slackUrl, title=alertTitle, msg=echoStr)
                     SlackInstance.send()
                 else:
                     if rule_name != 'disk_full':
                         q.add_queue({
+                            "url": slackUrl,
                             "title": alertTitle,
                             "msg": echoStr
                         })
@@ -90,7 +92,7 @@ def main():
         queue_list = q.get_queue_list()
         if len(queue_list) > 0:
             for i in queue_list:
-                SlackInstance = SlackMessage(url=slackUrl, title=i['title'], msg=i['msg'])
+                SlackInstance = SlackMessage(url=i['url'], title=i['title'], msg=i['msg'])
                 SlackInstance.send()
             q.reset_queue()
         
