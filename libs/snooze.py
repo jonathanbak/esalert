@@ -56,6 +56,16 @@ class Snooze:
                 send_datetime = datetime.strptime(self.alarmData["data"]["fields"]["timestamp"][0], "%Y-%m-%d %H:%M:%S")
                 last_send_datetime = datetime.strptime(matchAlarm["data"]["fields"]["timestamp"][0], "%Y-%m-%d %H:%M:%S")
                 
+                # prop 제외 (_id, sort)후 비교
+                if '_id' in matchAlarm["data"]:
+                    del matchAlarm["data"]["_id"]
+                if 'sort' in matchAlarm["data"]:
+                    del matchAlarm["data"]["sort"]
+                if '_id' in self.alarmData["data"]:
+                    del self.alarmData["data"]["_id"]
+                if 'sort' in self.alarmData["data"]:
+                    del self.alarmData["data"]["sort"]
+                
                 if json.dumps(matchAlarm) == json.dumps(self.alarmData) or send_datetime < last_send_datetime:
                     isSent = True
                 elif isSnoozeAlarm and self.snoozeMinute > 0:
