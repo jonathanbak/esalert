@@ -31,10 +31,12 @@ class Snooze:
         alarms = []
         if os.path.isfile(self.LATEST_SEND_FILE) == True:
             with open(self.LATEST_SEND_FILE, encoding="utf-8") as json_file:
-                json_data = json.load(json_file)
-                for jsonData in json_data:
-                    alarms.append(jsonData)
-
+                try:
+                    json_data = json.load(json_file)
+                    for jsonData in json_data:
+                        alarms.append(jsonData)
+                except:
+                    print('Decoding JSON has failed')
         return alarms
 
     # 최근에 발송여부
@@ -153,11 +155,15 @@ class Snooze:
             null = None
             if os.path.isfile(self.LATEST_SEND_FILE) == True:
                 with open(self.LATEST_SEND_FILE, encoding="utf-8") as json_file:
-                    json_data = json.load(json_file)
-                    for jsonData in json_data:
-                        isSameSection = self.isSameSectionAlarm(jsonData, self.alarmData)
-                        if isSameSection == False:
-                            alarms.append(jsonData)
+                    try:
+                        json_data = json.load(json_file)
+                        for jsonData in json_data:
+                            isSameSection = self.isSameSectionAlarm(jsonData, self.alarmData)
+                            if isSameSection == False:
+                                alarms.append(jsonData)
+                    except:
+                        print('Decoding JSON has failed')
+                                
             alarms.append(self.alarmData)
             save_file = open(self.LATEST_SEND_FILE, "w", encoding="utf-8")
             json.dump(alarms, save_file, ensure_ascii=False, indent=4)
@@ -171,12 +177,17 @@ class Snooze:
         alarms = []
         if os.path.isfile(self.LATEST_SEND_FILE) == True:
             with open(self.LATEST_SEND_FILE, encoding="utf-8") as json_file:
-                json_data = json.load(json_file)
-                for jsonData in json_data:
-                    if jsonData['section'] != section:
-                        alarms.append(jsonData)
+                
+                try:
+                    json_data = json.load(json_file)
+                    for jsonData in json_data:
+                        if jsonData['section'] != section:
+                            alarms.append(jsonData)
+                except:
+                    print('Decoding JSON has failed')
+            
+                
         save_file = open(self.LATEST_SEND_FILE, "w", encoding="utf-8")
         json.dump(alarms, save_file, ensure_ascii=False, indent=4)
         save_file.close()
-         
-         
+        
