@@ -23,12 +23,13 @@ class RuleLoaderTest(unittest.TestCase):
   def test_find_values(self):
 
     r = RuleLoader()
-    r.load('response_test1.json')
+    r.load('response_test_web_firewall.json')
     for k in r.config().all():
       findKeys = r.config().get(k + ".notify_key").split(',')
       resFormat = r.config().get(k + ".notify_format")
       
       newResParams = r.findValues(findKeys)
+      print(newResParams)
       notify = AlertMessage(resFormat)
       for o in range(len(newResParams)):
         echoStr = notify.getMessage(*newResParams[o])
