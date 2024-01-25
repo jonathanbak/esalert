@@ -81,7 +81,7 @@ class Snooze:
     def isVaildData(self):
         is_vaild = False
         try:
-            timestamp = datetime.strptime(self.alarmData["data"]["fields"]["timestamp"][0], "%Y-%m-%d %H:%M:%S")
+            # timestamp = datetime.strptime(self.alarmData["data"]["fields"]["timestamp"][0], "%Y-%m-%d %H:%M:%S")
             is_vaild = True
         except:
             is_vaild = False

@@ -33,5 +33,5 @@ class SlackMessage:
         msssage = urllib.parse.quote(self.message['text'] + "\n" + self.message['attachments'][0]['text'], '')
         response = requests.get(self.url + "/" + msssage ,timeout=5)        
         # response = requests.post(self.url, headers=self.headers, data=json.dumps(self.message))
-        logger.info(response.text)
+        logger.info(self.url + "/" + msssage)
         return response
